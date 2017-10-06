@@ -1,0 +1,13 @@
+
+{
+  "name": "onepagescroll",
+  "version": "3.0.1",
+  "description": "A lightweight onpagescroll",
+  "keywords": [ "onepagescroll", "responsive" ],
+  "homepage": "https://github.com/scher200/onepagescroll",
+  "repository": { "type": "git",
+                  "url": "https://github.com/scher200/onepagescroll"
+                },
+  "license": "MIT",
+  "main": "./onepagescroll.js"
+}
