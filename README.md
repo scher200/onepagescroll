@@ -36,6 +36,19 @@ and then call `onepagescroll();`
 onepagescroll('div.pages');
 ```
 
+OR just use it without a special wrapper
+
+```html
+<section>PAGE ONE</section>
+<section>PAGE TWO</section>
+<section>PAGE THREE</section>
+<section>PAGE FOUR</section>
+```
+
+```javascript
+onepagescroll();
+```
+
 
 ## Options(Attributes)
 ```javascript
