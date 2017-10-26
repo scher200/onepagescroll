@@ -46,17 +46,20 @@ function onepagescroll(selector = false, options) {
     keyboard: true,
     direction: 'vertical',
   };
+  // wheel even trigger
+  wheelEventTrigger = "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
+              document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+              "DOMMouseScroll";
 
 
   var setting = extend({}, def, options);
 
   // initialization
   function init() {
-
     // bind touch catching
     document.addEventListener('touchstart', touchStartOnePageScroll);
     document.addEventListener('touchend', touchEndOnePageScroll);
-    window.addEventListener('wheel', onScrollEventHandler);
+    window.addEventListener(wheelEventTrigger, onScrollEventHandler);
 
     // set transitions - selectedElem isset beneeth in parent scope
     css(selectedElem, {
@@ -93,6 +96,9 @@ function onepagescroll(selector = false, options) {
         var bullet_list = document.createElement('li');
         var bullet = document.createElement('a');
         bullet.setAttribute('data-targetindex', index);
+        bullet.addEventListener('click', function(){ 
+          changePage(false, pages.length, parseInt(this.getAttribute('data-targetindex')) );
+        });
         bullet_list.appendChild(bullet);
         bullet_list_container.appendChild(bullet_list);
       }
@@ -106,6 +112,7 @@ function onepagescroll(selector = false, options) {
         });
       }
 
+
       pages.push(obj);
       obj.setAttribute('data-pageindex', index++);
     });
@@ -114,8 +121,8 @@ function onepagescroll(selector = false, options) {
       document.body.appendChild(bullet_list_container);
       document.querySelector('a[data-targetindex="' + currentPage + '"]').classList.add('active');
     }
-	
-	console.log("onePageScroll: initialized");
+
+    console.log("onePageScroll: initialized");
 
     return true;
 
@@ -133,20 +140,27 @@ function onepagescroll(selector = false, options) {
 
 	var opsNavElem = document.querySelector('.ops-navigation');
 
-    // remove page bullets naviagation and eventlistners
-    if ( opsNavElem ) {
+    // remove page bullets naviagation and eventlisteners
+    if ( opsNavElem !== null ) {
 
       document.removeEventListener('touchstart', touchStartOnePageScroll);
       document.removeEventListener('touchend', touchEndOnePageScroll);
-      window.removeEventListener('wheel', onScrollEventHandler);
+      window.removeEventListener(wheelEventTrigger, onScrollEventHandler);
 
       var opsContainerElem = document.querySelector('.ops-container');
       if( opsContainerElem !== null ){
         opsContainerElem.classList.remove('ops-container');
       }
 
-      opsNavElem.parentNode.removeChild(opsNavElem);
-      console.log('opsNavElem', document.querySelector('.ops-navigation'));
+      // Remove all of them.
+      var selectTag = document.getElementsByClassName('ops-navigation');
+      while( selectTag[0] ) {
+          selectTag[0].parentNode.removeChild( selectTag[0] );
+      }
+
+      // if( typeof opsNavElem.parentNode !== 'undefined' ){
+      //   opsNavElem.parentNode.removeChild(opsNavElem);
+      // }
 
       console.log("onePageScroll: deinitialized");
 
@@ -228,6 +242,7 @@ function onepagescroll(selector = false, options) {
 
   // page transition function
   function changePage(compare, edge, increase) {
+
     if (isPageChanging) return;
 
     if (currentPage == compare) {
@@ -236,7 +251,14 @@ function onepagescroll(selector = false, options) {
       else
         return;
     } else {
-      currentPage += increase;
+      if( compare == false ){
+        if( currentPage == increase )
+          return;
+        else
+          currentPage = increase;
+      }else{
+        currentPage += increase;
+      }
     }
 
     if (setting.animationTime) isPageChanging = true;
@@ -260,10 +282,8 @@ function onepagescroll(selector = false, options) {
     }
   }
 
-
   // prepare onepagescroll if it would work on this page
   function main(){
-
     if ( (!selector || selector == def.pageContainer) && document.querySelector(def.pageContainer) ) {
       document.querySelector(def.pageContainer).parentElement.className += " pageContainerParent";
       selector = ".pageContainerParent";
@@ -274,23 +294,26 @@ function onepagescroll(selector = false, options) {
     if ( selectedElem == null ) {
 
       // if no onepagescroll sections found then deinitalize
+      console.log("onePageScroll: deinit");
       return deinit();
 
     } else if ( document.querySelector('.ops-navigation') ) {
 
       // if onepagescroll exists and is already initialized reinitialize it
+      console.log("onePageScroll: reinit");
       return reinit();
 
     } else {
 
       // if possible and not yet initialized then initialize
+      console.log("onePageScroll: init");
       return init();
 
     }
 
-	// something impossible happend
+	  // something impossible happend
     console.log("onePageScroll: Error");
-	return false;
+	  return false;
 
   }
 
@@ -298,7 +321,7 @@ function onepagescroll(selector = false, options) {
   if ( document.readyState === 'complete' ) {
     return main();
   } else {
-    window.addEventListener('onload', main(), false);
+    window.addEventListener('load', function(){ setTimeout(main, 200) }, false);
   }
 
 }
