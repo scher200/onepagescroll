@@ -1,0 +1,270 @@
+@font-face {
+  font-family: mono;
+  src: local("Source Code Pro"), local("思源宋体"), local("Microsoft YaHei"),
+    local("monospace");
+}
+
+@font-face {
+  font-family: song;
+  src: local("思源宋体"), local("Microsoft YaHei"), local("serif");
+}
+
+@font-face {
+  font-family: hei;
+  src: local("思源黑体"), local("Microsoft YaHei"), local("sans-serif");
+}
+
+@font-face {
+  font-family: kai;
+  src: local("Neuton"), local("KaiTi"), local("serif");
+}
+
+@page {
+  size: 192mm 240mm;
+  margin-top: 30mm;
+  margin-bottom: 20mm;
+}
+
+@page :left {
+  margin-left: 20mm;
+  margin-right: 28mm;
+}
+
+@page :right {
+  margin-left: 28mm;
+  margin-right: 20mm;
+}
+
+@page main {
+  @top {
+    content: string(book-title);
+    font-family: hei;
+    font-size: 12px;
+  }
+}
+@page main :left {
+  @top-left {
+    content: counter(page);
+    font-family: hei;
+    font-size: 12px;
+  }
+}
+
+@page main :right {
+  @top-right {
+    content: counter(page);
+    font-family: hei;
+    font-size: 12px;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0;
+  text-indent: 0;
+}
+#toc-title {
+  font-family: hei;
+  font-size: 40px;
+  font-weight: bolder;
+  margin: 0 auto 36px auto;
+  padding-left: -10px;
+  text-align: center;
+}
+#toc-column {
+  column-count: 2;
+  column-gap: 16px;
+  font-family: hei;
+}
+.toc-row {
+  margin: 1px auto;
+  line-height: 13px;
+  letter-spacing: 1px;
+}
+.toc-name-box {
+  display: inline-block;
+  width: 231px;
+  position: relative;
+}
+.toc-level0,
+.toc-level1,
+.toc-level2,
+.toc-level3 {
+  display: inline-block;
+}
+.toc-name {
+  background: white;
+}
+.toc-level0,
+.toc-level1 {
+  font-size: 12px;
+  font-weight: bold;
+}
+.toc-level0 {
+  padding-left: 44px;
+}
+.toc-level2 {
+  font-size: 11px;
+  padding-left: 0px;
+}
+.toc-level3 {
+  font-size: 11px;
+  padding-left: 11px;
+}
+.toc-level0 .toc-padding {
+  display: none;
+}
+.toc-padding {
+  font-size: 11px;
+  position: absolute;
+  left: 30px;
+  bottom: 0;
+  z-index: -1;
+}
+.toc-pagenum {
+  width: 44px;
+  background-color: white;
+  font-size: 11px;
+  padding-left: 5px;
+}
+.toc-pagenum a[href]::after {
+  content: target-counter(attr(href), page);
+}
+
+main {
+  page: main;
+  counter-reset: page 1;
+  font-family: song;
+}
+
+h1,
+h2,
+h3 {
+  font-family: hei;
+  font-weight: 600;
+  margin: 30px auto;
+  line-height: 40px;
+}
+
+h1 {
+  string-set: book-title content();
+  page-break-before: always;
+  font-size: 40px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4,
+h5,
+h6 {
+  font-family: hei;
+  font-weight: 600;
+  font-size: 13px;
+  margin: 30px auto;
+  line-height: 20px;
+}
+
+main p {
+  font-family: song;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1px;
+  margin: 6px auto;
+  text-indent: 27px;
+}
+
+li p,
+blockquote p,
+main table p {
+  text-indent: 0;
+}
+
+li {
+  font-family: song;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1px;
+}
+
+li li {
+  margin-left: -24px;
+}
+
+ul,
+ol {
+  font-family: song;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1px;
+}
+
+blockquote,
+code,
+main table,
+img,
+figcaption {
+  display: block;
+  font-family: song;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1px;
+  padding: 2px 10px 2px 10px;
+}
+
+main table td {
+  padding: 2px 5px 2px 5px;
+}
+
+blockquote,
+code {
+  margin: 6px 30px;
+  background-color: #dddddd;
+}
+
+blockquote blockquote {
+  margin: -10px 24px;
+}
+
+code {
+  font-family: mono;
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+main table,
+img,
+figcaption {
+  margin: 6px auto;
+}
+
+blockquote,
+main table {
+  width: fit-content;
+  border-collapse: collapse;
+}
+main table th,
+main table tr td {
+  border: 1px solid #c6cbd1;
+}
+img,
+main table caption,
+figcaption {
+  margin: 16px auto;
+  text-align: center;
+}
+em {
+  font-style: inherit;
+  line-height: 0;
+  text-indent: 0;
+}
+a {
+  text-decoration: none;
+}
