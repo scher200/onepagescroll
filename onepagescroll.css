@@ -5,7 +5,10 @@ body,html{
 	height: 100%;
 
 }
-
+h1,h2 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
 .ops-container {
 	position:relative;
 	display:block;
@@ -17,7 +20,7 @@ body,html{
 }
 
 .ops-page {
-	width: 100%;
+	width: 95%;
 	height: 100%;
 	position: relative;
 }
