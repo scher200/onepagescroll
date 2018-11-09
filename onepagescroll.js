@@ -30,7 +30,8 @@ function onepagescroll(selector = false, options) {
   };
   var keyDown = {
     40: 1,
-    34: 1
+    34: 1,
+    32: 1
   };
   // swipe
   var fpos = 0;
@@ -181,9 +182,9 @@ function onepagescroll(selector = false, options) {
         lpos = touch.pageX;
     }
     if (fpos + _n < lpos)
-      changePage(1, pages.length, -1);
+      changePage(1, pages.length+100, -1);
     else if (fpos > lpos + _n)
-      changePage(pages.length, 1, 1);
+      changePage(pages.length+100, 1, 1);
   }
 
   // catch touch end position
@@ -271,7 +272,7 @@ function onepagescroll(selector = false, options) {
       css(document.querySelector(selector), {
         transform: 'translate3d(0,' + -(currentPage - 1) * 100 + '%,0)',
         width: window.innerWidth + 'px',
-        height: window.innerHeight + 'px'
+        height: window.innerHeight  + 'px'
       });
     } else if (setting.direction == 'horizontal') {
       css(document.querySelector(selector), {
